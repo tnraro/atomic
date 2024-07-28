@@ -1,14 +1,16 @@
 use std::thread;
 
 fn main() {
-    let numbers  = Vec::from_iter(0..=53);
+    let numbers = vec![1, 2, 3];
 
-    let t1 = thread::spawn(move || {
-        let len = numbers.len();
-        let sum = numbers.into_iter().sum::<usize>();
-        sum / len
+    thread::scope(|s| {
+        s.spawn(|| {
+            println!("length: {}", numbers.len());
+        });
+        s.spawn(|| {
+            for n in &numbers {
+                println!("{n}");
+            }
+        });
     });
-
-    let average = t1.join().unwrap();
-    println!("average: {average}");
 }
