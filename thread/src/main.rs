@@ -1,16 +1,11 @@
 use std::thread;
 
 fn main() {
-    let numbers = vec![1, 2, 3];
+    static X: [i32; 3] = [1, 2, 3];
 
-    thread::scope(|s| {
-        s.spawn(|| {
-            println!("length: {}", numbers.len());
-        });
-        s.spawn(|| {
-            for n in &numbers {
-                println!("{n}");
-            }
-        });
-    });
+    let t1 = thread::spawn(|| dbg!(&X));
+    let t2 = thread::spawn(|| dbg!(&X));
+
+    t1.join().unwrap();
+    t2.join().unwrap();
 }
