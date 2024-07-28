@@ -1,15 +1,14 @@
 use std::thread;
 
 fn main() {
-    let t1 = thread::spawn(f);
-    let t2 = thread::spawn(f);
+    let numbers = vec![1, 2, 3];
+
+    let t1 = thread::spawn(move || {
+        for n in numbers {
+            println!("{n}");
+        }
+    });
+
     println!("main thread");
-
     t1.join().unwrap();
-    t2.join().unwrap();
-}
-
-fn f() {
-    let id = thread::current().id();
-    println!("thread id: {id:?}");
 }
